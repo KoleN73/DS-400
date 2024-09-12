@@ -139,17 +139,76 @@ data(pop_vs_soda)
 ```
 
 ```{r}
-view(pop_vs_soda)
+#view(pop_vs_soda)
 
 #fake_news %>% (table/data)
 #  tabyl(title_has_excl) %>%  (pull data)
 #  adorn_totals("row") 
+
 pop_vs_soda %>% 
-  tabyl(pop, region) %>% 
+  tabyl(region) %>% 
+  adorn_percentages("col")
+
+pop_vs_soda %>% 
+  tabyl(pop) %>% 
+  adorn_percentages("col")
+
+pop_vs_soda %>% 
+  tabyl(region, pop) %>% 
   adorn_percentages("col")
 ```
 
+```{r}
+ggplot(data=pop_vs_soda, aes(x = region, fill = pop)) +
+  geom_bar()
+#Survey cocentration is centered in Midwest
+#Possible bias
+```
+
 1\) Build a prior probability model (an unconditional probability model) with probabilities for where the person is from
+
+```{r}
+pop_vs_soda %>%
+  tabyl(pop)
+```
+
+```{r}
+likelihood <- pop_vs_soda %>%
+  tabyl(pop,region)%>%
+  adorn_percentages("col") %>%
+  filter(pop=="TRUE")%>%
+  select(-pop)%>%
+  unlist()
+likelihood
+```
+
+3\) Marginal Prior Probability that someone uses the word "pop"
+
+```{r}
+prior_probability_says_pop <- sum(priors*likelihood)
+prior_probability_says_pop
+```
+
+```{r}
+(priors[3] * likelihood
+  [3])/ prior_probability_says_pop
+```
+
+```{r}
+pop_vs_soda %>% 
+  tabyl(region, pop) %>% 
+  adorn_percentages("row")
+```
+
+```{r}
+#Based on census 
+priors <- c(
+  midwest = 0.21,
+  northeast = 0.17,
+  south = 0.38,
+  west =0.24
+)
+```
 
 -   Letting S denote the person is from the south
 

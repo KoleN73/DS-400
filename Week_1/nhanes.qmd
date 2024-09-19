@@ -220,6 +220,7 @@ view(nhanes_data)
 
 ```{r}
 ggplot(nhanes_data, aes(x = RIDAGEYR, fill = DIQ010)) + geom_density(alpha = 0.5)
+table(nhanes_data$age_bracket)
 ```
 
 #### P(B\|A)
@@ -227,3 +228,36 @@ ggplot(nhanes_data, aes(x = RIDAGEYR, fill = DIQ010)) + geom_density(alpha = 0.5
 B \<- has diabetes
 
 A \<- age over 40
+
+**P(B)**
+
+```{r}
+nhanes_data %>% 
+  tabyl(DIQ010)
+prior_probability_has_diabetes <- 0.13
+```
+
+**L(B\|A)**
+
+```{r}
+nhanes_data %>%
+  tabyl(DIQ010, age_bracket)%>%
+  adorn_percentages("row")
+likelihood_old_given_diabetes <- 0.96
+```
+
+**P(A)**
+
+```{r}
+nhanes_data %>% 
+  tabyl(age_bracket)
+probability_old <-0.53
+```
+
+#### P(B\|A)
+
+```{r}
+(prior_probability_has_diabetes* likelihood_old_given_diabetes) / probability_old
+```
+
+#### 

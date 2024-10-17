@@ -55,11 +55,11 @@ $$
 P(B \mid A) = \frac{P(B) L(B \mid A)}{P(A)} 
 $$
 
-A \<- Has exclamation point
+**A \<- Has exclamation point**
 
 -   Ac \<- Does not have exclamation point
 
-B \<- Article is fake
+**B \<- Article is fake**
 
 -   Bc \<- Article is real
 
@@ -78,7 +78,7 @@ P(B)=0.40 and P(Bc)=0.60.
 prior_probability_fake <- 0.40
 ```
 
-#### L(B\|A) = P(A\|B)   Likelihood of B given A = Probability of A given B
+#### L(B\|A) = P(A\|B) Likelihood of B given A = Probability of A given B
 
 L(B\|A) (the likelihood of B given A) is the same as P(A∣B) the probability of observing A given B.
 

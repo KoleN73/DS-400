@@ -23,13 +23,14 @@ library(janitor)
 
 ```{r}
 data(fake_news)
+
 ```
 
 ### Challenge
 
 [**Exercise 14.7**](https://www.bayesrulesbook.com/chapter-14#exercises-13) **Fake news: three predictors**
 
-Suppose a ***new news article*** is posted online – it has a 15-word title, 6% of its words have negative associations, and its title *doesn’t* have an exclamation point. We want to know if it is fake or real
+Suppose a ***new news article*** is posted online -- it has a 15-word title, 6% of its words have negative associations, and its title *doesn't* have an exclamation point. We want to know if it is fake or real
 
 ### Visualization (Exploratory Data Analysis) - 2 points
 
@@ -43,13 +44,37 @@ Below, insert a code chunk(s) and use `ggplot` to visualize the features of the 
 
 -   Exclamation point in the title (true vs false)
 
+```{r}
+ fake_news %>%
+  tabyl(type, title_has_excl) %>%
+  adorn_percentages("row")
+ 
+ggplot(fake_news, aes(x = type, y = percentage, fill = title_has_excl)) +
+  geom_bar(stat = "identity", position = "fill") +
+  geom_text(aes(label = percent(percentage, accuracy = 0.1)), 
+            position = position_fill(vjust = 0.5)) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(y = "Percentage", x = "Type", fill = "Exclamation in Title") +
+  theme_minimal()
+
+#ggplot(data = fake_news_percent, aes(x = type, fill = title_has_excl)) +
+#  geom_bar()
+
+
+```
+
+```{r}
+ggplot(data = fake_news, aes(x = above_average_weight, fill = species)) +
+  geom_bar()
+```
+
 ### Interpretation of Visualization - 2 points
 
 Below, write a few sentences explaining whether or not this ***new news article*** is true or fake solely using your visualization above
 
 ### Perform Naive Bayes Classification - 3 points
 
-Based on these three features (15-word title, 6% of its words have negative associations, and its title *doesn’t* have an exclamation point), utilize naive Bayes classification to calculate the posterior probability that the article is real. Do so using `naiveBayes()` with `predict()`.
+Based on these three features (15-word title, 6% of its words have negative associations, and its title *doesn't* have an exclamation point), utilize naive Bayes classification to calculate the posterior probability that the article is real. Do so using `naiveBayes()` with `predict()`.
 
 Below, insert the code chunks and highlight your answer
 

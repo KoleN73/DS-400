@@ -25,6 +25,7 @@ Make a visualization that will help the researcher determine the species based o
 ```{r}
 data(penguins_bayes)
 penguins <- penguins_bayes
+penguins
 ```
 
 ```{r}
